@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #container {
+        justify-content: center;
+        font-size: larger;
+        font-weight: bolder;
+        margin-left: 30px;
+    }
+
+    input {
+        font-size: larger;
+        font-weight: bolder;
+        justify-items: center;
+        margin-left: 40px;
+
+    }
+
+    iframe {
+        margin-top: 40px;
+    }
+
+    button {
+        font-size: larger;
+        font-weight: bolder;
+    }
+
+    #temp {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+        justify-content: center;
+    }
+
+    #temp>div {
+        gap: 40px;
+    }
+</style>
+
+<body>
+
+    <input type="text" id="city" />
+    <button id="btn" onclick="getData()">Search Weather</button>
+
+    <div id="temp">
+
+        <div id="container"></div>
+
+        <div class="mapouter">
+            <div class="gmap_canvas"><iframe width="600" height="500" id="gmap_canvas"
+                    src="https://maps.google.com/maps?q=gorakhpur%20&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                    frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a
+                    href="https://www.whatismyip-address.com/divi-discount/">divi discount</a><br>
+                <style>
+                    .mapouter {
+                        position: relative;
+                        text-align: right;
+                        height: 500px;
+                        width: 600px;
+                    }
+                </style><a href="https://www.embedgooglemap.net">google maps generator</a>
+                <style>
+                    .gmap_canvas {
+                        overflow: hidden;
+                        background: none !important;
+                        height: 500px;
+                        width: 600px;
+                    }
+                </style>
+            </div>
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>
+
+<script>
+
+    const api_key = "6eba249a6ff6a996ebb823a31a594a39";
+
+    //"https://api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}";
+
+
+    async function getData() {
+
+        let city = document.getElementById("city").value;
+
+        let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${api_key}`;
+
+        //    console.log(url);
+
+
+        let res = await fetch(url);
+
+        let data = await res.json();
+
+        append(data);
+
+        console.log(data)
+
+
+    }
+
+    function append(data) {
+
+        let container = document.getElementById("container");
+
+        let h3 = document.createElement("h3");
+        h3.innerText = `City Name: ${data.name}`;
+
+        let p1 = document.createElement("p");
+        p1.innerText = `Current temp: ${data.main.temp}`;
+
+
+        let p2 = document.createElement("p");
+        p2.innerText = `Max temp: ${data.main.temp_max}`;
+
+
+        let p3 = document.createElement("p");
+        p3.innerText = `Max temp: ${data.main.temp_min}`;
+
+
+        let p4 = document.createElement("p");
+        p4.innerText = `Cloud: ${data.clouds.all}`;
+
+
+        let p5 = document.createElement("p");
+        p5.innerText = `Sunrise: ${data.sys.sunrise}`;
+
+        let p6 = document.createElement("p");
+        p6.innerText = `Sunset: ${data.sys.sunset}`;
+
+        let p7 = document.createElement("p");
+        p7.innerText = `Wind Speed: ${data.wind.speed}`;
+
+        container.append(h3, p1, p2, p3, p4, p5, p6, p7);
+
+        let iframe = document.getElementById("gmap_canvas");
+        iframe.src = src = `https://maps.google.com/maps?q=${data.name}%20&t=&z=13&ie=UTF8&iwloc=&output=embed`;
+
+
+    }
+
+</script>
